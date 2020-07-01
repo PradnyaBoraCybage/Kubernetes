@@ -1,0 +1,56 @@
+#<----This document covers basic commands of Kubernetes-------->
+
+
+kubectl get nodes
+
+docker login
+docker pull <image-name>
+
+kubectl run <pod-name> --image=<image-name>
+kubectl run tomcat2 --image=tomcat
+
+
+#<---pod----->
+#Extract Pod definition file
+kubectl get pod <pod-name> -o yaml > pod-definition.yaml
+
+kubectl create -f pod-definition.yml
+kubectl get pods
+kubectl get pods -o wide
+kubectl describe pods
+kubectl describe pod <pod-name>
+kubectl delete pod <pod-name>
+
+
+#<---- deployment----->
+kubectl create deployment tomcat4 --image=tomcat
+kubectl delete deployment <deployment-name>
+kubectl scale deployment tomcat4  --replicas=3
+kubectl autoscale deployment tomcat4 --min=10 --max=15
+kubectl create -f  deployment-definition.yml 
+kubectl rollout status deployment/tomcat4
+kubectl rollout history deployment/tomcat4
+
+#<--to update deployment--->
+kubectl apply -f deployment-definition.yml
+kubectl set image deploment/myapp-deployment \ nginx=ngnix:1.9.1
+kubectl rollout undo deploment/myapp-deployment
+
+#<----Replication Controller--->
+
+kubectl create -f  rc-definition.yml
+kubectl replace -f  rc-definition.yml
+kubectl get replicationController
+
+
+
+#<-------Replica Set -------------->
+
+kubectl create -f  replicaset-definition.yml 
+kubectl get replicaset
+kubectl replace -f  rc-definition.yml
+kubectl scale --replicas=6  -f  rc-definition.yml
+kubectl delete replicaset  tomcat-rs
+
+
+kubectl  get all 
