@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+        name: tomcat-rs
+        labels:
+                app: tomcat
+                type: server
+spec:
+        template:
+                metadata:
+                        name: tomcat-name
+                        labels:
+                                app: tomcat-app
+                                type: server
+                spec:
+                        containers:
+                        - name: tomcat-container
+                          image: tomcat
+        replicas: 3
+        selector:
+                matchLabels:
+                        type: server
