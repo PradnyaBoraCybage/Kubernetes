@@ -1,0 +1,20 @@
+<----Replication Controller--->
+apiVersion: v1
+kind: ReplicationController
+metadata:
+        name: tomcat-rc
+        labels:
+                app: tomcat
+                type: os
+spec:
+        template:
+                metadata:
+                        name: tomcat-name
+                        labels:
+                                app: tomcat-app
+                                type: server
+                spec:
+                        containers:
+                        - name: tomcat-container
+                          image: tomcat
+        replicas: 3
