@@ -54,3 +54,84 @@ kubectl delete replicaset  tomcat-rs
 
 
 kubectl  get all 
+
+
+#<----Services ---->
+
+kubectl describe service <service-name>
+kubectl get services
+minikube start
+minikube service list
+kubectl expose deployments tomcat4 --port=80 --type=LoadBalancer
+
+
+
+<---Namespace---->
+
+kubectl get pods --namespace=dev
+kubectl create -f pod-definition.yml --namespace=dev
+kubectl create -f namespace-dev.yml
+kubectl create namespace dev
+
+
+#Switch to namespace
+kubectl config set-context $(kubectl config current-context) --namespace=dev
+
+kubectl get pods --all-namespaces
+
+
+<---Configuration---->
+kubectl create configmap \  # imperative way
+	app-config --from-literal=APP_COLOR=blue \
+			   --from-literal=APP_MOD=prod
+
+
+kubectl create  configmap \ # imperative way 
+	app-config --from-file=app_config.properties
+	
+	
+kubectl create -f config-map.yml # declarative way
+
+
+kubectl get configmaps
+
+kubectl describe configmaps
+
+<---secret---->
+1) create secret and then inject into pod
+kubectl create secret generic \
+        app-secret --from-literal=DB_HOST=mysql \
+				   --from-literal=DB_USER=root
+				   --from-literal=DB_PASSWRD=password
+
+kubectl create secret generic \
+        app-secret --from-file=app_secret.properties
+		
+		
+app_secret.properties
+DB_HOST: mysql
+DB_USER: root
+DB_PASSWRD: password
+		
+
+$echo -n 'mysql' | base64
+
+$echo -n 'JJHHK' | base64 --decode
+
+
+kubectl get secrets
+
+kubectl describe secrets
+
+
+kubectl get secret app-secret -o yaml 
+
+<---Service Account----->	
+
+kubectl create serviceaccount dashboard-sa
+
+kubectl get serviceaccount
+
+kubectl describe serviceaccount dashboard-sa
+
+kubectl describe secret dashbo-ard-sa-token-kbdm
